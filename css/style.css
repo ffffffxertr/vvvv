@@ -1,0 +1,239 @@
+/* ===== Reset أساسي ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Cairo", sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(24, 29, 37);
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5em 1.5em;
+  background: transparent;
+}
+
+header .mainLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header .mainLogo img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+}
+
+header .btn-group-header {
+  display: flex;
+  gap: 0.8em;
+}
+
+header .btn-group-header button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(49, 52, 56, 0.7);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+header .btn-group-header button:hover {
+  background-color: rgba(49, 52, 56, 1);
+}
+
+/* ===== قسم الـ Main الرئيسي ===== */
+main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: rgb(24, 29, 37);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* الحاوية الخاصة بالفيديو - في الأعلى فقط */
+.video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh; /* الفيديو يأخذ نصف الشاشة فقط */
+  z-index: 1;
+}
+
+/* تنسيق الفيديو ليملأ الحاوية تماماً دون تشوه */
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* طبقة التدرج المحسنة - من الفيديو إلى الخلفية الداكنة */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(24, 29, 37, 0.3) 0%,        /* شفاف قليلاً في أعلى الفيديو */
+    rgba(24, 29, 37, 0) 15%,          /* شفاف تماماً لرؤية الفيديو */
+    rgba(24, 29, 37, 0) 50%,          /* يبقى شفافاً */
+    rgba(24, 29, 37, 0.6) 75%,        /* يبدأ بالتعتيم تدريجياً */
+    rgb(24, 29, 37) 100%              /* لون داكن كامل في الأسفل */
+  );
+  pointer-events: none;
+}
+
+/* محتوى الواجهة (Hero Content) */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  padding: 0 1rem;
+  margin-top: 15vh; /* إزاحة المحتوى للأسفل قليلاً */
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: #cbd5e1;
+  margin-bottom: 2rem;
+}
+
+.hero-content .btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 350px;
+  gap: 1rem;
+}
+
+.button {
+  border: #00f5a0 2px solid;
+  background-color: transparent;
+  color: #fff;
+  width: 70%;
+  height: 3.5em;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  color: rgb(24, 29, 37);
+  background: linear-gradient(to right, #00f5a0, #00d9f5);
+  border-color: transparent;
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+/* الزر الاول المميز */
+.hero-content .btns .primary-btn {
+  color: rgb(24, 29, 37);
+  background: linear-gradient(to right, #00f5a0, #00d9f5);
+  border-color: transparent;
+}
+
+/* التعديل الخاص بالحواسيب والشاشات الكبيرة */
+@media (min-width: 768px) {
+  .video-container {
+    height: 60vh; /* زيادة ارتفاع الفيديو على الحواسيب */
+  }
+  
+  /* تحسين التدرج للشاشات الكبيرة */
+  .video-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(24, 29, 37, 0.2) 0%,
+      rgba(24, 29, 37, 0) 15%,
+      rgba(24, 29, 37, 0) 55%,
+      rgba(24, 29, 37, 0.5) 80%,
+      rgb(24, 29, 37) 100%
+    );
+  }
+  
+  .hero-content h1 {
+    font-size: 3.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.3rem;
+  }
+  
+  .hero-content {
+    margin-top: 20vh;
+  }
+}
+@media (min-width: 768px) {
+    .video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* الفيديو يأخذ نصف الشاشة فقط */
+  z-index: 1;
+}
+  .video-container {
+    height: 65vh; /* زيادة الارتفاع قليلاً على الحاسوب ليملأ مساحة أجمل */
+  }
+  .video-overlay {
+    .video-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(24, 29, 37, 0) 0%,
+      rgba(24, 29, 37, 0) 15%,
+      rgba(24, 29, 37, 0.506) 55%,
+      rgba(24, 29, 37, 0.5) 80%,
+      rgb(24, 29, 37) 100%
+    );
+  }
+  }
+}
