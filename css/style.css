@@ -97,7 +97,7 @@ main {
   object-fit: cover;
 }
 
-/* طبقة التدرج المحسنة - من الفيديو إلى الخلفية الداكنة */
+/* طبقة التدرج المصححة - انسياب ناعم بدون قفزات حادة (موبايل) */
 .video-overlay {
   position: absolute;
   top: 0;
@@ -106,11 +106,14 @@ main {
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(24, 29, 37, 0.3) 0%,        /* شفاف قليلاً في أعلى الفيديو */
-    rgba(24, 29, 37, 0) 15%,          /* شفاف تماماً لرؤية الفيديو */
-    rgba(24, 29, 37, 0) 50%,          /* يبقى شفافاً */
-    rgba(24, 29, 37, 0.6) 75%,        /* يبدأ بالتعتيم تدريجياً */
-    rgb(24, 29, 37) 100%              /* لون داكن كامل في الأسفل */
+    rgba(24, 29, 37, 0.3) 0%,
+    rgba(24, 29, 37, 0) 15%,
+    rgba(24, 29, 37, 0) 35%,
+    rgba(24, 29, 37, 0.15) 50%,
+    rgba(24, 29, 37, 0.35) 62%,
+    rgba(24, 29, 37, 0.6) 75%,
+    rgba(24, 29, 37, 0.85) 88%,
+    rgb(24, 29, 37) 100%
   );
   pointer-events: none;
 }
@@ -216,6 +219,7 @@ main {
   height: 30px;
   background-color: rgba(255, 255, 255, 0.2);
 }
+
 .bottom-glow {
   position: fixed;
   bottom: 0;
@@ -242,28 +246,47 @@ main {
   }
 }
 
+/* ===== الانديكتور الجديد: أيقونة فقط بدون حاوية، منبطح في الأسفل ===== */
 .scroll-indicator {
   position: fixed;
-  bottom: 2rem;
+  bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 56px;
-  height: 56px;
-  border-radius: .5em;
+  width: 32px;
+  height: 32px;
   border: none;
-  background: linear-gradient(to right, #00f5a0, #00d9f5);
-  color: rgb(24, 29, 37);
-  font-size: 1.3rem;
+  background: transparent;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 5;
-  transition: transform 0.3s ease;
+  padding: 0;
+  animation: bounce 1.8s ease-in-out infinite;
+}
+
+.scroll-indicator svg {
+  width: 100%;
+  height: 100%;
+  stroke: url(#scrollGradient); /* يستخدم التدرج الأخضر-السماوي عبر SVG */
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .scroll-indicator:hover {
-  transform: translateX(-50%) scale(1.1);
+  opacity: 0.8;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+  }
 }
 
 @media (min-width: 768px) {
@@ -272,13 +295,28 @@ main {
   }
 
   .scroll-indicator {
-    bottom:4%;
+    bottom: 4%;
     left: 4%;
-    width:50px;
-    height: 50px;
-    font-size: 1.5rem;
+    transform: none;
+    width: 28px;
+    height: 28px;
+  }
+
+  .scroll-indicator:hover {
+    transform: none;
+    opacity: 0.8;
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(10px);
+    }
   }
 }
+
 @media (min-width: 768px) {
   .trust-indicators {
     gap: 2.5rem;
@@ -292,6 +330,7 @@ main {
     font-size: 1rem;
   }
 }
+
 /* التعديل الخاص بالحواسيب والشاشات الكبيرة */
 @media (min-width: 768px) {
   .video-container {
@@ -310,28 +349,32 @@ main {
     object-fit: cover;
   }
 
+  /* طبقة التدرج المصححة - انسياب ناعم بدون قفزات حادة (ديسكتوب) */
   .video-overlay {
-  background:
-    /* الطبقة 1: فينيات شعاعية خفيفة (تأثير سينمائي على الزوايا) */
-    radial-gradient(
-      ellipse at top right,
-      rgba(24, 29, 37, 0) 0%,
-      rgba(24, 29, 37, 0) 35%,
-      rgba(24, 29, 37, 0.2) 55%,
-      rgb(24, 29, 37) 75%,
-      rgb(24, 29, 37) 100%
-    ),
-    /* الطبقة 2: تدرج خطي يضمن اندماج مستقيم موحّد مع الأسفل */
-    linear-gradient(
-      to bottom,
-      rgba(24, 29, 37, 0) 0%,
-      rgba(24, 29, 37, 0) 40%,
-      rgba(24, 29, 37, 0.25) 60%,
-      rgba(24, 29, 37, 0.55) 78%,
-      rgba(24, 29, 37, 0.85) 92%,
-      rgb(24, 29, 37) 100%
-    );
-}
+    background:
+      /* الطبقة 1: فينيات شعاعية خفيفة (تأثير سينمائي على الزوايا) */
+      radial-gradient(
+        ellipse at top right,
+        rgba(24, 29, 37, 0) 0%,
+        rgba(24, 29, 37, 0) 35%,
+        rgba(24, 29, 37, 0.15) 55%,
+        rgba(24, 29, 37, 0.5) 75%,
+        rgb(24, 29, 37) 100%
+      ),
+      /* الطبقة 2: تدرج خطي مصحح بنقاط توقف إضافية لانسياب أنعم */
+      linear-gradient(
+        to bottom,
+        rgba(24, 29, 37, 0) 0%,
+        rgba(24, 29, 37, 0) 35%,
+        rgba(24, 29, 37, 0.12) 50%,
+        rgba(24, 29, 37, 0.28) 62%,
+        rgba(24, 29, 37, 0.5) 74%,
+        rgba(24, 29, 37, 0.72) 84%,
+        rgba(24, 29, 37, 0.9) 93%,
+        rgb(24, 29, 37) 100%
+      );
+  }
+
   .hero-content h1 {
     font-size: 3.5rem;
   }
@@ -343,13 +386,14 @@ main {
   .hero-content {
     margin-top: 20vh;
   }
+
   .hero-content .btns {
-  display: flex;
-  align-items: center;
-  justify-content:start;
-  flex-direction: row;      /* هذا كان ناقص */
-  width: 100%;
-  max-width: 100%;          /* وسّعتها شوي باش تتسع للزرين جنب بعض */
-  gap: 1rem;
-}
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: row;
+    width: 100%;
+    max-width: 100%;
+    gap: 1rem;
+  }
 }
