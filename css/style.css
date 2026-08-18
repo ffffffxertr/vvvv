@@ -221,7 +221,7 @@ main {
 }
 
 .bottom-glow {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -247,8 +247,10 @@ main {
 }
 
 /* ===== الانديكتور الجديد: أيقونة فقط بدون حاوية، منبطح في الأسفل ===== */
+/* position: absolute بدل fixed لتجنب مشكلة إزاحة العناصر الثابتة
+   مع أشرطة أدوات متصفحات الموبايل عند غياب أي تمرير بالصفحة */
 .scroll-indicator {
-  position: fixed;
+  position: absolute;
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
@@ -257,6 +259,7 @@ main {
   border: none;
   background: transparent;
   color: #ffffff;
+  font-size: 1.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,16 +267,6 @@ main {
   z-index: 5;
   padding: 0;
   animation: bounce 1.8s ease-in-out infinite;
-}
-
-.scroll-indicator svg {
-  width: 100%;
-  height: 100%;
-  stroke: url(#scrollGradient); /* يستخدم التدرج الأخضر-السماوي عبر SVG */
-  fill: none;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 .scroll-indicator:hover {
@@ -300,6 +293,7 @@ main {
     transform: none;
     width: 28px;
     height: 28px;
+    font-size: 1.2rem;
   }
 
   .scroll-indicator:hover {
